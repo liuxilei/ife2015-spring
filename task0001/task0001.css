@@ -53,6 +53,11 @@ p.test {
     color: #fff;
     margin-bottom: 10px;
 }
+.twoColumns-first::after {
+    content: " ";
+    clear: both;
+    display: block;
+}
 .twoColumns-first .one {
     background: red;
     float: left;
@@ -65,7 +70,7 @@ p.test {
 }
 .twoColumns-second {
     position: relative;
-    top: 210px;
+    top: 10px;
 }
 .twoColumns-second .one{
     position: absolute;
@@ -81,17 +86,72 @@ p.test {
 }
 
 /* 三列布局 */
-.threeColumn-one {
+.threeColumn-one div {
+    margin-top: 200px;
     height: 200px;
     color: #fff;
     margin-bottom: 10px;
 }
+.threeColumn-one::after {
+    content: " ";
+    clear: both;
+    display: block;
+}
 .threeColumn-one .one {
+    float: left;
     background: red;
+    width: 100px;
 }
 .threeColumn-one .two {
+    float: left;
     background: black;
+    width: calc(100% - 200px);
 }
 .threeColumn-one .three {
+    float: left;
+    background: blue;
+    width: 100px;
+}
+
+.threeColumn-two {
+    position: relative;
+    top: 10px;
+}
+.threeColumn-two div {
+    height: 200px;
+    color: #fff;
+}
+.threeColumn-two .one {
+    position: absolute;
+    left: 0px;
+    width: 100px;
+    background: red;
+}
+.threeColumn-two .three {
+    position: absolute;
+    right: 0px;
+    width: 100px;
     background: blue;
 }
+.threeColumn-two .two {
+    position: absolute;
+    left: 100px;
+    right: 100px;
+    width: auto;
+    background: black;
+}
+
+.flex {
+    background: red;
+    display: flex;
+    margin-top: 300px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.flex div {
+    width: 300px;
+    height: 200px;
+    background: blue;
+    margin-top: 20px;
+}
+
