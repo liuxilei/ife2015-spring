@@ -268,4 +268,229 @@ footer img {
     width: 22.5%;
     background: #fff;
     height: 91px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blog-main .search .input {
+    position: relative;
+    width: 84%;
+    height: 50px;
+}
+.blog-main .search .input input {
+    height: 100%;
+    width: 73%;
+    outline: none;
+    position: absolute;
+    left: 0px;
+    text-indent: 50px;
+    font-size: 19px;
+    overflow: hidden;
+    border: 0.1px solid rgba(0,0,0,.3);
+    border-right: 0.1px solid #ddd;
+}
+.blog-main .search .input icon {
+    font-size: 31px;
+    position: absolute;
+    left: 8px;
+    top: 9px;
+    color: rgba(0,0,0,.3);
+}
+.blog-main .search .btn {
+    position: absolute;
+    right: 0px;
+    width: 27%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ddd;
+    font-size: 20px;
+    color: #fff;
+}
+
+.blog-main .type {
+    position: absolute;
+    right: 97px;
+    top: 125px;
+    width: 22.5%;
+}
+.blog-main .type a {
+    display: block;
+    width: 99%;
+    height: 60px;
+    line-height: 60px;
+    border-left: 3px solid #dfc6e6;
+    margin-bottom: 1px;
+    color: rgba(0,0,0,.5);
+    text-indent: 20px;
+    text-decoration: none;
+    background: #fff;
+}
+.blog-main .type a:hover,
+.blog-main .type a:active {
+    border-left: 3px solid #522a5c;
+}
+
+.blog-main .calendar {
+    position: absolute;
+    right: 97px;
+    top: 380px;
+    width: 22.5%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.blog-main .calendar .content {
+    width: 80%;
+    margin: 15px 20px 20px;
+}
+.blog-main .calendar .content > div {
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.blog-main .calendar .content > div:not(first-child) {
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    font-size: 12px;
+}
+.blog-main .calendar .content div span {
+    width: 26px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.blog-main .calendar .content div span.bold {
+    font-weight: bold;
+    color: #522a5c;
+}
+.blog-main .calendar .content div span.focus {
+    color: #fff;
+    background: #522a5c;
+}
+.blog-main .calendar .content  div:first-child {
+    color: #522a5c;
+}
+.blog-main .calendar .content  div:first-child .center {
+    font-size: 14px;
+    font-weight: bold;
+    color: #522a5c;
+}
+
+.blog-main .tag {
+    position: absolute;
+    right: 97px;
+    top: 580px;
+    width: 22.5%;
+    background: #fff;
+}
+.blog-main .tag .content {
+    padding: 5px 20px 20px;
+    color: #522a5c;
+}
+.blog-main .tag .content h4 {
+    font-weight: normal;
+    font-size: 12px;
+    color: rgba(0,0,0,.5);
+}
+.blog-main .tag .content p {
+    display: flex;
+    align-items: flex-end;
+    font-size: 11px;
+}
+.blog-main .tag .content .big {
+    font-weight: bold;
+    font-size: 22px;
+}
+.blog-main .tag .content .middle {
+    font-weight: bold;
+    font-size: 18px;
+}
+.blog-main .tag .content .thin {
+    font-weight: normal;
+}
+.blog-main article.page {
+    background: transparent;
+    border-top: 1px solid transparent;
+}
+.blog-main article .content {
+    text-align: center;
+}
+.blog-main article .content div {
+    display: inline-block;
+    padding: 0px 20px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 13px;
+    background: #fff;
+}
+.blog-main article .content div:nth-child(2) {
+    color: rgba(0,0,0,.2);
+}
+.blog-main article .content div:nth-child(3) {
+    color: #fff;
+    background: #a660b7;
+}
+.blog-main article .content div:first-child {
+    color: rgba(0,0,0,.3);
+}
+/* 作品部分 */
+.blog-main .gallery-search {
+    margin-top: 45px;
+}
+.blog-main .gallery-article {
+    margin-top: 65px;
+    position: relative;
+}
+.blog-main .gallery-title {
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 13px;
+    height: 45px;
+    top: -45px;
+    background: #fff;
+}
+.blog-main .gallery-title li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 2px solid #dfc6e6;
+    padding: 15px 20px;
+    border-right: 1px solid rgba(0,0,0,.1);
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+.blog-main .gallery-title li:first-child {
+    border-bottom: 1px solid #fff;
+    border-top: 2px solid #522a5c;
+}
+.blog-main .gallery-title li:nth-child(3) {
+    border-top: 2px solid #d2a6ff;
+}
+.blog-main .gallery-title li:nth-child(4) {
+    border-top: 2px solid #ffa98c; 
+}
+.blog-main .gallery-title li:last-child {
+    border-top: 2px solid #ffe188;
+}
+
+.blog-main .more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.blog-main .more div {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.blog-main .more div icon {
+    color: rgba(0,0,0,.3);
+    font-size: 14px;
+}
+.blog-main .more div span {
+    color: rgba(0,0,0,.7);
 }
