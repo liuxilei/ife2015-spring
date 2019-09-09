@@ -21,13 +21,13 @@ function isFunction(fn) {
 // 被复制的对象类型会被限制为数字、字符串、布尔、日期、数组、Object对象。不会包含函数、正则对象等
 function cloneObject(src) {
     let result;
-    switch(Object.prototype.toString.call(src)) {
+    switch (Object.prototype.toString.call(src)) {
         case "[object Date]":
             result = new Date(src);
             break;
         case "[object Array]":
             let temp = [];
-            for(let i = 0;i < src.length;i++) {
+            for (let i = 0; i < src.length; i++) {
                 temp[i] = cloneObject(src[i]);
             }
             result = temp;
@@ -97,11 +97,11 @@ console.log(b); // [1, 3, 5, 7]
 // 实现一个简单的trim函数，用于去除一个字符串，头部和尾部的空白字符
 // 假定空白字符只有半角空格、Tab
 // 练习通过循环，以及字符串的一些基本方法，分别扫描字符串str头部和尾部是否有连续的空白字符，并且删掉他们，最后返回一个完成去除的字符串
-function simpleTrim(str) { 
+function simpleTrim(str) {
     let first = 0;
     let last = str.length - 1;
-    while(str[first] === " ") first++;
-    while(str[last] === " ") last--;
+    while (str[first] === " ") first++;
+    while (str[last] === " ") last--;
     return str.substring(first, last + 1);
 }
 // 使用示例
@@ -112,7 +112,7 @@ console.log(str); // 'hi!'
 // 对字符串头尾进行空格字符的去除、包括全角半角空格、Tab等，返回一个字符串
 // 尝试使用一行简洁的正则表达式完成该题目
 function trim(str) {
-    return str.replace(/^\s+|\s+$/g,"");
+    return str.replace(/^\s+|\s+$/g, "");
 }
 
 // 实现一个遍历数组的方法，针对数组中每一个元素执行fn函数，并将数组索引和元素作为参数传递
@@ -205,11 +205,6 @@ console.log(getPosition(document.getElementById("addbtn")));
 //接下来挑战一个mini $，它和之前的$是不兼容的，它应该是document.querySelector的功能子集，
 //在不直接使用document.querySelector的情况下，在你的util.js中完成以下任务：
 
-// 实现一个简单的jQuery
-function $(selector) {
-    
-}
-
 // 可以通过id获取DOM对象，通过#标示，例如
 $("#adom"); // 返回id为adom的DOM对象
 
@@ -226,3 +221,157 @@ $("[data-time=2015]"); // 返回第一个包含属性data-time且值为2015的�
 
 // 可以通过简单的组合提高查询便利性，例如
 $("#adom .classa"); // 返回id为adom的DOM所包含的所有子节点中，第一个样式定义包含classa的对象
+
+
+//多个选择器有点难到我了，看了一些资料觉得思路应该如下：
+//1.如果存在#，直接从#开始向后查
+//2.如果存在tag直接找到所有的tag然后向后查
+//3.样式类，属性，从后向前查，得到它所有的父节点名称，去筛选匹配
+//以上的做法有点太复杂，我还是做一个简单的正向匹配吧。
+// function $(selector) {
+
+//     if (!selector) {
+//         return null;
+//     }
+
+//     if (selector == document) {
+//         return document;
+//     }
+
+//     selector = selector.trim();
+//     if (selector.indexOf(" ") !== -1) { //若存在空格
+//         var selectorArr = selector.split(/\s+/); //拆成数组
+
+//         var rootScope = myQuery(selectorArr[0]); //第一次的查找范围
+//         var i = null;
+//         var j = null;
+//         var result = [];
+//         //循环选择器中的每一个元素
+//         for (i = 1; i < selectorArr.length; i++) {
+//             for (j = 0; j < rootScope.length; j++) {
+//                 result.push(myQuery(selectorArr[i], rootScope[j]));
+//             }
+//             // rootScope = result;
+//             // 目前这个方法还有bug
+//         }
+//         return result[0][0];
+//     } else { //只有一个，直接查询
+//         return myQuery(selector, document)[0];
+//     }
+// }
+
+/**
+ * 针对一个内容查找结果 success
+ * @param  {String} selector 选择器内容
+ * @param  {Element} root    根节点元素
+ * @return {NodeList数组}    节点列表，可能是多个节点也可能是一个
+ */
+// function myQuery(selector, root) {
+//     var signal = selector[0]; //
+//     var allChildren = null;
+//     var content = selector.substr(1);
+//     var currAttr = null;
+//     var result = [];
+//     root = root || document; //若没有给root，赋值document
+//     switch (signal) {
+//         case "#":
+//             result.push(document.getElementById(content));
+//             break;
+//         case ".":
+//             allChildren = root.getElementsByTagName("*");
+//             // var pattern0 = new RegExp("\\b" + content + "\\b");
+//             for (i = 0; i < allChildren.length; i++) {
+//                 currAttr = allChildren[i].getAttribute("class");
+//                 if (currAttr !== null) {
+//                     var currAttrsArr = currAttr.split(/\s+/);
+//                     console.log(currAttr);
+//                     for (j = 0; j < currAttrsArr.length; j++) {
+//                         if (content === currAttrsArr[j]) {
+//                             result.push(allChildren[i]);
+//                             console.log(result);
+//                         }
+//                     }
+//                 }
+//             }
+//             break;
+//         case "[": //属性选择
+//             if (content.search("=") == -1) { //只有属性，没有值
+//                 allChildren = root.getElementsByTagName("*");
+//                 for (i = 0; i < allChildren.length; i++) {
+//                     if (allChildren[i].getAttribute(selector.slice(1, -1)) !== null) {
+//                         result.push(allChildren[i]);
+//                     }
+//                 }
+//             } else { //既有属性，又有值
+//                 allChildren = root.getElementsByTagName("*");
+//                 var pattern = /\[(\w+)\s*\=\s*(\w+)\]/; //为了分离等号前后的内容
+//                 var cut = selector.match(pattern); //分离后的结果，为数组
+//                 var key = cut[1]; //键
+//                 var value = cut[2]; //值
+//                 for (i = 0; i < allChildren.length; i++) {
+//                     if (allChildren[i].getAttribute(key) == value) {
+//                         result.push(allChildren[i]);
+//                     }
+//                 }
+//             }
+//             break;
+//         default: //tag
+//             result = root.getElementsByTagName(selector);
+//             break;
+//     }
+//     return result;
+// }
+
+//4.事件
+//任务描述
+//我们来继续用封装自己的小jQuery库来实现我们对于JavaScript事件的学习，还是在你的util.js，实现以下函数
+// 给一个element绑定一个针对event事件的响应，响应函数为listener
+function addEvent(element, event, listener) {
+    element.addEventListener(event, listerner);
+}
+
+// 例如：
+function clicklistener(event) {
+}
+//addEvent($("#doma"), "click", a);
+
+// 移除element对象对于event事件发生时执行listener的响应
+function removeEvent(element, event, listener) {
+    element.removeEventListener(event, listerner);
+}
+
+//接下来我们实现一些方便的事件方法
+
+// 实现对click事件的绑定
+function addClickEvent(element, listener) {
+    element.addEventListener("click", listener);
+}
+
+// 实现对于按Enter键时的事件绑定
+function addEnterEvent(element, listener) {
+    element.addEventListener("keydown", function(e) {
+        if (e.keyCode == 13) {
+            listener();
+        }
+    });
+}
+
+//接下来考虑这样一个场景，我们需要对一个列表里所有的<li>增加点击事件的监听
+
+// 先简单一些
+function delegateEvent(element, tag, eventName, listener) {
+    element.addEventListener(eventName, function(e) {
+        if (e.target.nodeName === tag.toUpperCase()) {
+            e.target.addEventListener(eventName, listener);
+        }
+    })
+}
+var $ = {};
+
+$.delegate = delegateEvent;
+
+// 使用示例
+// 还是上面那段HTML，实现对list这个ul里面所有li的click事件进行响应
+$.delegate(document.getElementById("list"), "li", "click", function() {
+    console.log(1);
+});
