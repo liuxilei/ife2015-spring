@@ -4,9 +4,9 @@
 
 初级班和中级班的任务内容基本一致，但是在细节要求和时间要求上会不一样。
 
-- 任务一：[HTML、CSS基础](./task0001/README.md)
+- 任务一：[HTML、CSS基础](./task0001)
 
-- 任务二：[JavaScript基础](./task0002/README.md)
+- 任务二：[JavaScript基础](./task0002)
 
 - 任务三：深入学习JavaScript语言的一些特性、以及相关的一些设计模式等知识。实践一个小型的to-do项目实践，巩固学习知识
 
