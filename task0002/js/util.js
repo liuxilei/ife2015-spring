@@ -194,7 +194,6 @@ removeClass(document.body, "test");
 function isSiblingNode(element, siblingNode) {
     return element.parentNode === siblingNode.parentNode;
 }
-isSiblingNode(document.getElementById("number1"), document.getElementById("number2"));
 
 // 获取element相对于浏览器窗口的位置，返回一个对象{x, y}
 function getPosition(element) {
@@ -203,28 +202,27 @@ function getPosition(element) {
         y: element.getBoundingClientRect().top
     }
 }
-console.log(getPosition(document.getElementById("addbtn")));
 
 
 //接下来挑战一个mini $，它和之前的$是不兼容的，它应该是document.querySelector的功能子集，
 //在不直接使用document.querySelector的情况下，在你的util.js中完成以下任务：
 
 // 可以通过id获取DOM对象，通过#标示，例如
-$("#adom"); // 返回id为adom的DOM对象
+//$("#adom"); // 返回id为adom的DOM对象
 
 // 可以通过tagName获取DOM对象，例如
-$("a"); // 返回第一个<a>对象
+//$("a"); // 返回第一个<a>对象
 
 // 可以通过样式名称获取DOM对象，例如
-$(".classa"); // 返回第一个样式定义包含classa的对象
+//$(".classa"); // 返回第一个样式定义包含classa的对象
 
 // 可以通过attribute匹配获取DOM对象，例如
-$("[data-log]"); // 返回第一个包含属性data-log的对象
+//$("[data-log]"); // 返回第一个包含属性data-log的对象
 
-$("[data-time=2015]"); // 返回第一个包含属性data-time且值为2015的对象
+//$("[data-time=2015]"); // 返回第一个包含属性data-time且值为2015的对象
 
 // 可以通过简单的组合提高查询便利性，例如
-$("#adom .classa"); // 返回id为adom的DOM所包含的所有子节点中，第一个样式定义包含classa的对象
+//$("#adom .classa"); // 返回id为adom的DOM所包含的所有子节点中，第一个样式定义包含classa的对象
 
 
 // 实现一个简单的Query
@@ -341,14 +339,14 @@ function $(selector) {
 //我们来继续用封装自己的小jQuery库来实现我们对于JavaScript事件的学习，还是在你的util.js，实现以下函数
 // 给一个element绑定一个针对event事件的响应，响应函数为listener
 function addEvent(element, event, listener) {
-    element.addEventListener(event, listerner);
+    element.addEventListener(event, listener);
 }
 
 //addEvent($("#doma"), "click", a);
 
 // 移除element对象对于event事件发生时执行listener的响应
 function removeEvent(element, event, listener) {
-    element.removeEventListener(event, listerner);
+    element.removeEventListener(event, listener);
 }
 
 //接下来我们实现一些方便的事件方法
