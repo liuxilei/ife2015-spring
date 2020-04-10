@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>负的margin会改变元素的宽度</title>
+    <style>
+        body,ul,li{ padding:0; margin:0;}
+        ul,li{ list-style:none;}
+        .container{ height:210px; width:460px; border:5px solid #000;}
+        ul{ height:210px; overflow:hidden; margin-right:-20px;}/*一个负的margin-right,相当于把ul的宽度增加了20px*/
+        li{ height:100px; width:100px; background:#09F; float:left; margin-right:20px; margin-bottom:10px;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <ul>
+            <li>子元素1</li>
+            <li>子元素2</li>
+            <li>子元素3</li>
+            <li>子元素4</li>
+            <li>子元素5</li>
+            <li>子元素6</li>
+            <li>子元素7</li>
+            <li>子元素8</li>
+        </ul>
+    </div>
+
+    <div>
+        利用负的margin会改变元素的宽度这一特性实现盒子内子元素间隔，而每行最后一个元素的间隔没有
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "name": "ife2015-spring",
+  "version": "1.0.0",
+  "description": "ife2015春季班练习题",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liuxilei/ife2015-spring.git"
+  },
+  "keywords": [
+    "ife",
+    "ife2015",
+    "ife2015-spring"
+  ],
+  "author": "liuxilei",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liuxilei/ife2015-spring/issues"
+  },
+  "homepage": "https://github.com/liuxilei/ife2015-spring#readme",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.1.0"
+  }
+}

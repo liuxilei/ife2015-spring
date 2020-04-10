@@ -22,9 +22,11 @@ function isFunction(fn) {
 function cloneObject(src) {
     let result;
     switch (Object.prototype.toString.call(src)) {
+        //日期
         case "[object Date]":
             result = new Date(src);
             break;
+        //数组
         case "[object Array]":
             let temp = [];
             for (let i = 0; i < src.length; i++) {
@@ -32,6 +34,7 @@ function cloneObject(src) {
             }
             result = temp;
             break;
+        //Object对象
         case "[object Object]":
             let tempObj = {};
             for (let key in src) {
@@ -39,6 +42,7 @@ function cloneObject(src) {
             }
             result = tempObj;
             break;
+        //数字、字符串、布尔
         default:
             result = src;
             break;
@@ -223,42 +227,52 @@ $("[data-time=2015]"); // 返回第一个包含属性data-time且值为2015的�
 $("#adom .classa"); // 返回id为adom的DOM所包含的所有子节点中，第一个样式定义包含classa的对象
 
 
-//多个选择器有点难到我了，看了一些资料觉得思路应该如下：
-//1.如果存在#，直接从#开始向后查
-//2.如果存在tag直接找到所有的tag然后向后查
-//3.样式类，属性，从后向前查，得到它所有的父节点名称，去筛选匹配
-//以上的做法有点太复杂，我还是做一个简单的正向匹配吧。
-// function $(selector) {
-
-//     if (!selector) {
-//         return null;
-//     }
-
-//     if (selector == document) {
-//         return document;
-//     }
-
-//     selector = selector.trim();
-//     if (selector.indexOf(" ") !== -1) { //若存在空格
-//         var selectorArr = selector.split(/\s+/); //拆成数组
-
-//         var rootScope = myQuery(selectorArr[0]); //第一次的查找范围
-//         var i = null;
-//         var j = null;
-//         var result = [];
-//         //循环选择器中的每一个元素
-//         for (i = 1; i < selectorArr.length; i++) {
-//             for (j = 0; j < rootScope.length; j++) {
-//                 result.push(myQuery(selectorArr[i], rootScope[j]));
-//             }
-//             // rootScope = result;
-//             // 目前这个方法还有bug
-//         }
-//         return result[0][0];
-//     } else { //只有一个，直接查询
-//         return myQuery(selector, document)[0];
-//     }
-// }
+// 实现一个简单的Query
+function $(selector) {
+    var ele = document;
+    var sele = selector.replace(/\s+/, ' ').split(' ');    // 去除多余的空格并分割
+    for (var i = 0, len = sele.length; i < len; i++) {
+        switch (sele[i][0]) {    // 从子节点中查找
+            case '#':
+                ele = ele.getElementById(sele[i].substring(1));
+                break;
+            case '.':
+                ele = ele.getElementsByClassName(sele[i].substring(1))[0];
+                break;
+            case '[':
+                var valueLoc = sele[i].indexOf('=');
+                var temp = ele.getElementsByTagName('*');
+                var tLen = temp.length;
+                if (valueLoc !== -1) {
+                    var key = sele[i].substring(1, valueLoc);
+                    var value = sele[i].substring(valueLoc + 1, sele[i].length - 1);
+                    for (var j = 0; j < tLen; j++) {
+                        if (temp[j][key] === value) {
+                            ele = temp[j];
+                            break;
+                        }
+                    }
+                }
+                else {
+                    var key = sele[i].substring(1, sele[i].length - 1);
+                    for (var j = 0; j < tLen; j++) {
+                        if (temp[j][key]) {
+                            ele = temp[j];
+                            break;
+                        }
+                    }
+                }
+                break;
+            default :
+                ele = ele.getElementsByTagName(sele[i])[0];
+                break;
+        }
+    }
+    if (!ele) {
+        ele = null;
+    }
+    return ele;
+}
 
 /**
  * 针对一个内容查找结果 success
@@ -330,9 +344,6 @@ function addEvent(element, event, listener) {
     element.addEventListener(event, listerner);
 }
 
-// 例如：
-function clicklistener(event) {
-}
 //addEvent($("#doma"), "click", a);
 
 // 移除element对象对于event事件发生时执行listener的响应
@@ -375,3 +386,121 @@ $.delegate = delegateEvent;
 $.delegate(document.getElementById("list"), "li", "click", function() {
     console.log(1);
 });
+
+//5.BOM
+// 判断是否为IE浏览器，返回-1或者版本号
+function isIE() {
+    return /msie (\d+\.\d+)/i.test(navigator.userAgent)
+        ? (document.documentMode || + RegExp['\x241']) : -1;
+}
+
+function isValidCookieName(cookieName) {
+    // http://www.w3.org/Protocols/rfc2109/rfc2109
+    // Syntax:  General
+    // The two state management headers, Set-Cookie and Cookie, have common
+    // syntactic properties involving attribute-value pairs.  The following
+    // grammar uses the notation, and tokens DIGIT (decimal digits) and
+    // token (informally, a sequence of non-special, non-white space
+    // characters) from the HTTP/1.1 specification [RFC 2068] to describe
+    // their syntax.
+    // av-pairs   = av-pair *(";" av-pair)
+    // av-pair    = attr ["=" value] ; optional value
+    // attr       = token
+    // value      = word
+    // word       = token | quoted-string
+
+    // http://www.ietf.org/rfc/rfc2068.txt
+    // token      = 1*<any CHAR except CTLs or tspecials>
+    // CHAR       = <any US-ASCII character (octets 0 - 127)>
+    // CTL        = <any US-ASCII control character
+    //              (octets 0 - 31) and DEL (127)>
+    // tspecials  = "(" | ")" | "<" | ">" | "@"
+    //              | "," | ";" | ":" | "\" | <">
+    //              | "/" | "[" | "]" | "?" | "="
+    //              | "{" | "}" | SP | HT
+    // SP         = <US-ASCII SP, space (32)>
+    // HT         = <US-ASCII HT, horizontal-tab (9)>
+
+    return (new RegExp('^[^\\x00-\\x20\\x7f\\(\\)<>@,;:\\\\\\\"\\[\\]\\?=\\{\\}\\/\\u0080-\\uffff]+\x24'))
+        .test(cookieName);
+}
+
+// 设置cookie
+function setCookie(cookieName, cookieValue, expiredays) {
+    if (!isValidCookieName(cookieName)) {
+        return;
+    }
+
+    var exdate = '';
+    if (expiredays) {
+        exdate = new Date();
+        exdate.setDate(exdate.getDate() + expiredays);
+        var expires = ';expires=' + exdate.toUTCString();     // toGMTString is deprecated and should no longer be used, it's only there for backwards compatibility, use toUTCString() instead
+    }
+    document.cookie = cookieName + '=' + encodeURIComponent(cookieValue) + expires;    // 废弃的 escape() 方法生成新的由十六进制转移序列替换的字符串. 使用 encodeURI 或 encodeURIComponent 代替
+}
+
+// 获取cookie值
+function getCookie(cookieName) {
+    if (!isValidCookieName(cookieName)) {
+        return null;
+    }
+
+    var re = new RegExp(cookieName + '=(.*?)($|;)');
+    return re.exec(document.cookie)[1] || null;
+}
+
+// task 6.1
+// 学习Ajax，并尝试自己封装一个Ajax方法。
+function ajax(url, options) {
+    // 创建对象
+    let request = new requestRequest();
+    let data;
+    // 处理data
+    if (options.data) {
+        let dataArr = [];
+        for (let item in options.data) {
+            dataArr.push(item + '=' + encodeURI(options.data[item]));
+        }
+        data = dataArr.join('&');
+    }
+
+    // 处理type
+    if (!options.type) {
+        options.type = 'GET';
+    }
+    options.type = options.type.toUpperCase();
+
+    // 发送请求
+    if (options.type === 'GET') {
+        var myURL = '';
+        if (options.data) {
+            myURL = url + '?' + data;
+        }
+        else {
+            myURL = url;
+        }
+        request.open('GET', myURL, true);
+        request.send();
+    } else if (options.type === 'POST') {
+        request.open('POST', url, true);
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        request.send(data);
+    }
+
+    // readyState
+    request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+            if (request.status === 200) {
+                if (options.onsuccess) {
+                    options.onsuccess(request.responseText, request.responseXML);
+                }
+            }
+            else {
+                if (options.onfail) {
+                    options.onfail();
+                }
+            }
+        }
+    }
+}
